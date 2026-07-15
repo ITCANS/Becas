@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sistema de Becas CANS</title>
+    
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            background-color: #f1f5f9; 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: #1e293b;
+            padding: 20px 10px;
+        }
+        .wrapper { max-width: 850px; margin: 0 auto; }
+        .control-panel {
+            background-color: #ffffff; padding: 24px; border-radius: 16px;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); border-left: 5px solid #1d4ed8;
+            margin-bottom: 24px; display: flex; flex-direction: column; gap: 16px;
+        }
+        @media (min-width: 768px) {
+            .control-panel { flex-direction: row; justify-content: space-between; align-items: center; }
+        }
+        .control-title { font-size: 20px; font-weight: 800; color: #1e3a8a; }
+        .control-desc { font-size: 13px; color: #64748b; }
+        .btn-generate {
+            background: linear-gradient(135deg, #1d4ed8 0%, #1e3a8a 100%); color: #ffffff;
+            font-weight: 700; padding: 12px 24px; border-radius: 12px; border: none;
+            cursor: pointer; box-shadow: 0 4px 6px -1px rgba(29, 78, 216, 0.2); font-size: 14px;
+        }
+        .sheet { background-color: #ffffff; padding: 40px; border-radius: 16px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.08); border: 1px solid #e2e8f0; }
+        .header-section { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #1e3a8a; padding-bottom: 16px; margin-bottom: 20px; }
+        .logo-box { width: 25%; text-align: center; }
+        .logo-img { width: 100%; max-height: 96px; object-fit: contain; }
+        .title-box { width: 50%; text-align: center; }
+        .title-main { font-size: 22px; font-weight: 900; text-transform: uppercase; color: #1e3a8a; }
+        .title-sub { font-size: 15px; font-weight: 700; color: #475569; }
+        .meta-box { width: 25%; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; font-size: 13px; }
+        .meta-row { display: flex; align-items: center; gap: 8px; }
+        
+        input[type="text"], input[type="date"], input[type="number"], select {
+            border: 1px solid #cbd5e1; background-color: #f8fafc; border-radius: 6px;
+            padding: 8px 12px; font-size: 13px; width: 100%; color: #1e293b;
+            -webkit-appearance: none; appearance: none; /* Evita que iOS deforme los selectores */
+        }
+        
+        .type-banner { background-color: #eff6ff; border: 1px solid #bfdbfe; padding: 16px; border-radius: 12px; margin-bottom: 24px; display: flex; flex-wrap: wrap; gap: 20px; }
+        .banner-group { flex: 1; min-width: 200px; }
+        .banner-label { display: block; font-size: 11px; font-weight: 700; color: #1e3a8a; text-transform: uppercase; margin-bottom: 6px; }
+        
+        .form-section { margin-bottom: 24px; }
+        .section-header { background-color: #1e3a8a; color: #ffffff; font-weight: 700; font-size: 13px; text-transform: uppercase; padding: 8px 16px; border-radius: 8px 8px 0 0; }
+        .section-content { border: 1px solid #1e3a8a; border-top: none; padding: 16px; border-radius: 0 0 8px 8px; background-color: #ffffff; }
+        
+        .grid-3 { display: grid; grid-template-columns: 1fr; gap: 16px; margin-bottom: 16px; }
+        @media (min-width: 768px) { .grid-3 { grid-template-columns: repeat(3, 1fr); } }
+        .field-box { display: flex; flex-direction: column; }
+        .field-label { font-size: 10px; text-transform: uppercase; color: #64748b; margin-top: 4px; font-weight: 600; }
+        
+        .row-inline { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; background-color: #f8fafc; padding: 12px; border-radius: 8px; margin-bottom: 16px; }
+        .row-inline-label { font-size: 13px; font-weight: 700; color: #1e3a8a; }
+        
+        .signature-container { width: 100%; display: flex; flex-direction: column; align-items: center; margin-top: 16px; }
+        .canvas-container { position: relative; width: 100%; height: 110px; background-color: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 8px; }
+        .canvas-element { position: absolute; top: 0; left: 0; width: 100%; height: 100%; touch-action: none; }
+        
+        .director-zone { border: 2px solid #eab308; background-color: #fef9c3; border-radius: 8px; padding: 24px; margin-top: 32px; }
+        
+        @media print {
+            .no-print { display: none !important; }
+            body { background-color: #ffffff !important; padding: 0 !important; }
+            .sheet { padding: 0 !important; border: none !important; box-shadow: none !important; }
+            input, select { border: none !important; border-bottom: 1px solid #000000 !important; background: transparent !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+        <div class="control-panel no-print">
+            <div>
+                <h1 class="control-title">Registro de Becas CANS</h1>
+                <p class="control-desc">Abre este archivo en CodePen o GitHub Pages para compatibilidad total en iOS.</p>
+            </div>
+            <button id="btn-gen-pdf" class="btn-generate">Generar PDF</button>
+        </div>
+
+        <div id="pdf-content" class="sheet">
+            <div class="header-section">
+                <div class="logo-box">
+                    <img id="logo-preview" src="LOGO.jpg" alt="Logo" class="logo-img" />
+                </div>
+                <div class="title-box">
+                    <h2 class="title-main">Solicitud de Beca</h2>
+                    <h3 class="title-sub">School Year 2026-2027</h3>
+                </div>
+                <div class="meta-box">
+                    <div class="meta-row"><span>Folio:</span><input type="text" id="folio" style="width: 70px; text-align: center; color: red; font-weight: bold;" /></div>
+                    <div class="meta-row"><span>Fecha:</span><input type="date" id="fechaSolicitud" style="width: 140px;" /></div>
+                </div>
+            </div>
+
+            <div class="type-banner">
+                <div class="banner-group">
+                    <span class="banner-label">Tipo de Solicitud</span>
+                    <select id="tipoSolicitud">
+                        <option value="Nuevo Solicitante">Nuevo Solicitante</option>
+                        <option value="Renovación">Renovación</option>
+                    </select>
+                </div>
+                <div class="banner-group">
+                    <span class="banner-label">Sección a Cursar</span>
+                    <select id="seccion">
+                        <option value="PRE-K">Pre-K</option>
+                        <option value="KINDERGARTEN">Kindergarten</option>
+                        <option value="ELEMENTARY">Elementary</option>
+                        <option value="JR. HIGH SCHOOL">Jr. High School</option>
+                        <option value="HIGH SCHOOL">High School</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="section-header">1. Datos del Alumno</div>
+                <div class="section-content">
+                    <div class="grid-3">
+                        <div class="field-box"><input type="text" id="alumnoPaterno" /><span class="field-label">Ap. Paterno</span></div>
+                        <div class="field-box"><input type="text" id="alumnoMaterno" /><span class="field-label">Ap. Materno</span></div>
+                        <div class="field-box"><input type="text" id="alumnoNombres" /><span class="field-label">Nombre(s)</span></div>
+                    </div>
+
+                    <div class="row-inline">
+                        <span class="row-inline-label">¿Tiene hermanos en el colegio?</span>
+                        <select id="tieneHermanos" style="width: 100px; background-color: #ffffff; border: 1px solid #a8b2c1;">
+                            <option value="No">No</option>
+                            <option value="Si">Sí</option>
+                        </select>
+                        
+                        <div id="hermanos-container" style="display: none; flex: 1; gap: 10px;">
+                            <input type="text" id="hermanoNombre" placeholder="Nombre del hermano" style="flex: 2;" />
+                            <input type="text" id="hermanoSeccion" placeholder="Sección" style="flex: 1;" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="section-header">2. Datos del Tutor y Firma</div>
+                <div class="section-content">
+                    <div class="grid-3">
+                        <div class="field-box"><input type="text" id="tutorNombre" /><span class="field-label">Nombre Completo del Tutor</span></div>
+                        <div class="field-box"><input type="text" id="celular" /><span class="field-label">Celular</span></div>
+                    </div>
+
+                    <div class="signature-container">
+                        <div class="canvas-container">
+                            <canvas id="signature-canvas" class="canvas-element"></canvas>
+                        </div>
+                        <span class="field-label">Firma Digital del Tutor</span>
+                        <button id="btn-clear-sig" class="no-print" style="color: red; background: none; border: none; font-size: 11px; margin-top: 5px; cursor: pointer;">Borrar Firma</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="director-zone">
+                <h3 style="text-align: center; color: #854d0e; margin-bottom: 10px;">Uso Exclusivo de Dirección General</h3>
+                <div style="display: flex; gap: 20px;">
+                    <div style="flex: 1;"><span class="field-label">% Asignado</span><input type="text" id="porcentajeAsignado" style="background: white;" /></div>
+                    <div style="flex: 2;"><span class="field-label">Autorizado Por</span><input type="text" value="Lic. Brenda A. Pulido Galvan" disabled style="background: #e2e8f0; text-align: center;" /></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function() {
+            document.getElementById('fechaSolicitud').value = new Date().toISOString().split('T')[0];
+            document.getElementById('folio').value = "0001";
+
+            // Evento Forzado compatible con pantallas táctiles viejas y nuevas de iOS
+            const elHermanos = document.getElementById('tieneHermanos');
+            ['change', 'click', 'input'].forEach(evt => {
+                elHermanos.addEventListener(evt, function() {
+                    const contenedor = document.getElementById('hermanos-container');
+                    if (this.value === 'Si') {
+                        contenedor.style.display = 'flex';
+                    } else {
+                        contenedor.style.display = 'none';
+                    }
+                });
+            });
+
+            document.getElementById('btn-clear-sig').addEventListener('click', clearSignature);
+            document.getElementById('btn-gen-pdf').addEventListener('click', () => window.print());
+
+            initCanvas();
+        };
+
+        let canvas, ctx, drawing = false;
+
+        function initCanvas() {
+            canvas = document.getElementById('signature-canvas');
+            ctx = canvas.getContext('2d');
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            ctx.lineWidth = 3;
+            ctx.lineCap = 'round';
+            ctx.strokeStyle = '#000000';
+
+            canvas.addEventListener('touchstart', (e) => { e.preventDefault(); drawing = true; ctx.beginPath(); const p = getPos(e); ctx.moveTo(p.x, p.y); }, { passive: false });
+            canvas.addEventListener('touchmove', (e) => { if(!drawing) return; e.preventDefault(); const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); }, { passive: false });
+            canvas.addEventListener('touchend', () => drawing = false);
+        }
+
+        function getPos(e) {
+            const rect = canvas.getBoundingClientRect();
+            return { x: e.touches[0].clientX - rect.left, y: e.touches[0].clientY - rect.top };
+        }
+
+        function clearSignature() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
+    </script>
+</body>
+</html>
