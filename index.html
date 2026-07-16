@@ -852,8 +852,9 @@
             document.getElementById('activeEdadLabel').innerText = `${edad} Años`;
         }
 
-        async function generatePDF() {
+async function generatePDF() {
             const paterno = document.getElementById('alumnoPaterno').value.trim();
+            const materno = document.getElementById('alumnoMaterno').value.trim();
             const nombres = document.getElementById('alumnoNombres').value.trim();
             const tutorPaterno = document.getElementById('tutorPaterno').value.trim();
             const tutorNombres = document.getElementById('tutorNombres').value.trim();
@@ -867,8 +868,42 @@
                 return;
             }
 
+            // 1. OBTENER LA ABREVIACIÓN DE LA SECCIÓN / GRADO
+            let seccionAbreviada = "";
+            const gradoSeleccionado = document.getElementById('alumnoGrado').value;
+
+            // Evaluamos primero si es Maternal (Pre-K)
+            if (gradoSeleccionado.includes("Pre-K") || gradoSeleccionado.toLowerCase().includes("maternal")) {
+                seccionAbreviada = "PK";
+            } else {
+                // Si no es maternal, abreviamos por sección principal
+                switch(currentSection) {
+                    case 'KINDERGARTEN':
+                        seccionAbreviada = "K";
+                        break;
+                    case 'ELEMENTARY':
+                        seccionAbreviada = "E";
+                        break;
+                    case 'JR. HIGH SCHOOL':
+                        seccionAbreviada = "JR";
+                        break;
+                    case 'HIGH SCHOOL':
+                        seccionAbreviada = "HS";
+                        break;
+                    default:
+                        seccionAbreviada = "SEC";
+                }
+            }
+
+            // 2. EXTRAER SOLO EL PRIMER NOMBRE
+            // Divide la cadena por espacios y toma el primer elemento
+            const primerNombre = nombres.split(" ")[0];
+
+            // 3. OBTENER EL FOLIO ACTUAL
+            const folioActual = document.getElementById('folioNo').value || '000';
+
             document.getElementById('pdfMetaSeccion').innerText = currentSection;
-            document.getElementById('pdfFolio').innerText = document.getElementById('folioNo').value || 'S/N';
+            document.getElementById('pdfFolio').innerText = folioActual;
             document.getElementById('pdfFecha').innerText = document.getElementById('fechaSolicitud').value || '-';
             
             const isRenovacion = document.querySelector('input[name="tipoTramite"]:checked').value === "Renovación";
@@ -882,11 +917,11 @@
             }
 
             document.getElementById('pdfAluPaterno').innerText = paterno;
-            document.getElementById('pdfAluMaterno').innerText = document.getElementById('alumnoMaterno').value || '-';
+            document.getElementById('pdfAluMaterno').innerText = materno || '-';
             document.getElementById('pdfAluNombre').innerText = nombres;
             document.getElementById('pdfAluNacimiento').innerText = document.getElementById('alumnoNacimiento').value || '-';
             document.getElementById('pdfAluEdad').innerText = document.getElementById('alumnoEdad').value || 'No calculado';
-            document.getElementById('pdfAluGrado').innerText = document.getElementById('alumnoGrado').value;
+            document.getElementById('pdfAluGrado').innerText = gradoSeleccionado;
 
             const tieneHermanos = document.querySelector('input[name="tieneHermanos"]:checked').value === "Si";
             if (tieneHermanos) {
@@ -965,12 +1000,14 @@
 
                     pdf.addImage(imgData, 'JPEG', 0, 0, width, height);
                     
-                    const nombreArchivo = `Solicitud_Beca_CANS_25-26_${paterno}_${nombres}.pdf`;
+                    // 4. CONSTRUCCIÓN DEL NOMBRE DEL ARCHIVO CON LA NUEVA ESTRUCTURA
+                    // Estructura: Grado_Folio_Apellido Paterno_Primer Nombre.pdf
+                    const nombreArchivo = `${seccionAbreviada}_${folioActual}_${paterno}_${primerNombre}.pdf`;
                     pdf.save(nombreArchivo);
 
-                    // --- ACCIONES POST-DESCARGA SOLICITADAS ---
-                    incrementarFolio(); // 1. Suma 1 al folio y lo guarda en LocalStorage
-                    resetFormulario();  // 2. Limpia todos los inputs, la firma y sube la pantalla
+                    // ACCIONES POST-DESCARGA
+                    incrementarFolio(); 
+                    resetFormulario();  
 
                 } catch (error) {
                     console.error("Error al exportar el PDF:", error);
