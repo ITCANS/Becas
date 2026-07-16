@@ -29,9 +29,9 @@
     <header class="bg-gradient-to-r from-blue-900 to-indigo-950 text-white shadow-xl py-6 px-4 md:px-8">
         <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
             <div class="flex items-center gap-4">
-                <div class="bg-white p-2.5 rounded-full shadow-md text-blue-900 w-16 h-16 flex items-center justify-center">
-                    <i class="fa-solid fa-graduation-cap text-3xl"></i>
-                </div>
+                <div class="bg-white p-1 rounded-full shadow-md w-16 h-16 flex items-center justify-center overflow-hidden">
+                        <img src="logo.png" alt="Logo CANS" class="w-full h-full object-contain">
+                    </div>
                 <div>
                     <h1 class="text-2xl md:text-3xl font-serif-title font-bold tracking-wide">COLEGIO AMERICANO</h1>
                     <p class="text-sm md:text-base text-yellow-400 font-semibold tracking-wider">NUEVO SANTANDER</p>
@@ -379,17 +379,20 @@
     <div class="absolute -left-[9999px] top-0">
         <div id="pdfTemplate" class="w-[800px] bg-white p-10 text-slate-950 font-serif relative" style="font-family: 'Times New Roman', Times, serif;">
             
-            <div class="flex justify-between items-start border-b-2 border-slate-900 pb-5 mb-5">
+                    <div class="flex justify-between items-start border-b-2 border-slate-900 pb-5 mb-5">
+            <div class="flex items-center gap-4">
+                <img src="logo.png" alt="Logo CANS" class="w-16 h-16 object-contain">
                 <div>
-                    <h2 class="text-3xl font-extrabold tracking-wide text-slate-950" style="font-family: 'Times New Roman', serif;">COLEGIO AMERICANO</h2>
-                    <h3 class="text-xl font-bold tracking-widest text-slate-800" style="font-family: 'Times New Roman', serif;">NUEVO SANTANDER</h3>
-                </div>
-                <div class="text-right">
-                    <p class="text-lg font-bold uppercase tracking-widest">SOLICITUD DE BECA</p>
-                    <p class="text-sm font-semibold text-slate-700">SCHOOL YEAR 2025-2026</p>
-                    <p id="pdfMetaSeccion" class="text-xl font-extrabold text-blue-900 tracking-wider mt-1">KINDERGARTEN</p>
+                    <h2 class="text-2xl font-extrabold tracking-wide text-slate-950" style="font-family: 'Times New Roman', serif;">COLEGIO AMERICANO</h2>
+                    <h3 class="text-lg font-bold tracking-widest text-slate-800" style="font-family: 'Times New Roman', serif;">NUEVO SANTANDER</h3>
                 </div>
             </div>
+            <div class="text-right">
+                <p class="text-lg font-bold uppercase tracking-widest">SOLICITUD DE BECA</p>
+                <p class="text-sm font-semibold text-slate-700">SCHOOL YEAR 2025-2026</p>
+                <p id="pdfMetaSeccion" class="text-xl font-extrabold text-blue-900 tracking-wider mt-1">KINDERGARTEN</p>
+            </div>
+        </div>
 
             <div class="grid grid-cols-3 gap-4 mb-6 text-sm">
                 <div class="border-b border-slate-400 pb-1">
