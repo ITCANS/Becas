@@ -682,17 +682,58 @@
             });
         }
 
+// --- NUEVA LÓGICA PARA EVITAR QUE SE BORRE LA FIRMA AL HACER SCROLL ---
+        let lastCanvasWidth = 0;
+        let lastCanvasHeight = 0;
+
         function resizeCanvas() {
             const rect = canvas.parentNode.getBoundingClientRect();
-            canvas.width = rect.width;
-            canvas.height = rect.height;
-            ctx.lineWidth = 2.5;
-            ctx.lineCap = 'round';
-            ctx.strokeStyle = '#1e3a8a';
-            if (hasSigned) {
-                clearSignature();
+            
+            // Redondeamos para evitar variaciones por fracciones de píxel
+            const newWidth = Math.round(rect.width);
+            const newHeight = Math.round(rect.height);
+
+            // SOLO redimensionamos y limpiamos si las dimensiones físicas reales cambiaron
+            // (por ejemplo, si se rota el iPad de vertical a horizontal)
+            if (newWidth !== lastCanvasWidth || newHeight !== lastCanvasHeight) {
+                
+                // Guardamos el contenido actual por si acaso hay un cambio real menor
+                let tempCanvas = null;
+                if (hasSigned) {
+                    tempCanvas = document.createElement('canvas');
+                    tempCanvas.width = canvas.width;
+                    tempCanvas.height = canvas.height;
+                    const tempCtx = tempCanvas.getContext('2d');
+                    tempCtx.drawImage(canvas, 0, 0);
+                }
+
+                // Ajustamos el tamaño real del lienzo
+                canvas.width = newWidth;
+                canvas.height = newHeight;
+                
+                // Guardamos las nuevas dimensiones de control
+                lastCanvasWidth = newWidth;
+                lastCanvasHeight = newHeight;
+
+                // Volvemos a configurar el estilo del trazo (se pierde al cambiar de tamaño)
+                ctx.lineWidth = 2.5;
+                ctx.lineCap = 'round';
+                ctx.strokeStyle = '#1e3a8a';
+
+                // Si ya había una firma, la restauramos en la medida de lo posible en el nuevo espacio
+                if (hasSigned && tempCanvas) {
+                    ctx.drawImage(tempCanvas, 0, 0, newWidth, newHeight);
+                }
             }
         }
+
+        // Modificamos la escucha del evento resize para darle un pequeño tiempo de espera (debounce)
+        // Esto evita que se dispare de manera descontrolada en móviles
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(resizeCanvas, 150);
+        });
 
         function startDrawing(e) {
             drawing = true;
