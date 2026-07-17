@@ -28,19 +28,19 @@
 
     <header class="bg-gradient-to-r from-blue-900 to-indigo-950 text-white shadow-xl py-6 px-4 md:px-8">
         <!-- NOMBRE DEL COLEGIO OPTIMIZADO EN EL HEADER -->
-<div class="flex items-center gap-4">
-    <!-- El contenedor de tu logo (en caso de que solo uses el isotipo azul de la izquierda) -->
-    <div class="bg-white p-1 rounded-full shadow-md w-16 h-16 flex items-center justify-center overflow-hidden">
-        <img src="logo.png" alt="Logo CANS" class="w-full h-full object-contain">
-    </div>
-    
-    <!-- Texto replicando el diseño oficial -->
-    <div class="flex flex-col justify-center select-none text-white leading-none">
-        <h2 class="text-2xl font-black tracking-normal uppercase" style="font-family: 'Montserrat', 'Arial Black', sans-serif;">COLEGIO</h2>
-        <h2 class="text-2xl font-black tracking-normal uppercase mt-0.5" style="font-family: 'Montserrat', 'Arial Black', sans-serif;">AMERICANO</h2>
-        <h3 class="text-[11px] font-light tracking-[0.22em] uppercase text-slate-200 mt-1" style="font-family: 'Montserrat', sans-serif;">NUEVO SANTANDER</h3>
-    </div>
-</div>
+        <div class="flex items-center gap-4">
+            <!-- El contenedor de tu logo (en caso de que solo uses el isotipo azul de la izquierda) -->
+            <div class="bg-white p-1 rounded-full shadow-md w-16 h-16 flex items-center justify-center overflow-hidden">
+                <img src="logo.png" alt="Logo CANS" class="w-full h-full object-contain">
+            </div>
+            
+            <!-- Texto replicando el diseño oficial -->
+            <div class="flex flex-col justify-center select-none text-white leading-none">
+                <h2 class="text-2xl font-black tracking-normal uppercase" style="font-family: 'Montserrat', 'Arial Black', sans-serif;">COLEGIO</h2>
+                <h2 class="text-2xl font-black tracking-normal uppercase mt-0.5" style="font-family: 'Montserrat', 'Arial Black', sans-serif;">AMERICANO</h2>
+                <h3 class="text-[11px] font-light tracking-[0.22em] uppercase text-slate-200 mt-1" style="font-family: 'Montserrat', sans-serif;">NUEVO SANTANDER</h3>
+            </div>
+        </div>
     </header>
 
     <main class="flex-grow max-w-6xl w-full mx-auto px-4 md:px-8 mt-8">
@@ -152,7 +152,7 @@
                             <div>
                                 <label class="block text-xs font-semibold text-slate-500 mb-1.5">Grado a Cursar</label>
                                 <select id="alumnoGrado" class="w-full border border-slate-200 rounded-xl px-4 py-2.5 focus:ring-2 focus:ring-blue-500 bg-white">
-                                    </select>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -376,24 +376,24 @@
     <div class="absolute -left-[9999px] top-0">
         <div id="pdfTemplate" class="w-[800px] bg-white p-10 text-slate-950 font-serif relative" style="font-family: 'Times New Roman', Times, serif;">
             
-                  <div class="flex justify-between items-start border-b-2 border-slate-900 pb-5 mb-5">
-            <div class="flex items-center gap-5">
-                <!-- Logo en el PDF -->
-                <img src="logo.png" alt="Logo CANS" class="w-20 h-20 object-contain">
-                
-                <!-- Texto imitando el logotipo oficial -->
-                <div class="flex flex-col justify-center leading-[0.95] text-slate-950">
-                    <h2 class="text-3xl font-extrabold tracking-normal uppercase" style="font-family: 'Arial Black', sans-serif;">COLEGIO</h2>
-                    <h2 class="text-3xl font-extrabold tracking-normal uppercase mt-1" style="font-family: 'Arial Black', sans-serif;">AMERICANO</h2>
-                    <h3 class="text-xs font-normal tracking-[0.25em] uppercase text-slate-800 mt-1.5" style="font-family: 'Arial', sans-serif; font-weight: 300;">NUEVO SANTANDER</h3>
+            <div class="flex justify-between items-start border-b-2 border-slate-900 pb-5 mb-5">
+                <div class="flex items-center gap-5">
+                    <!-- Logo en el PDF -->
+                    <img src="logo.png" alt="Logo CANS" class="w-20 h-20 object-contain">
+                    
+                    <!-- Texto imitando el logotipo oficial -->
+                    <div class="flex flex-col justify-center leading-[0.95] text-slate-950">
+                        <h2 class="text-3xl font-extrabold tracking-normal uppercase" style="font-family: 'Arial Black', sans-serif;">COLEGIO</h2>
+                        <h2 class="text-3xl font-extrabold tracking-normal uppercase mt-1" style="font-family: 'Arial Black', sans-serif;">AMERICANO</h2>
+                        <h3 class="text-xs font-normal tracking-[0.25em] uppercase text-slate-800 mt-1.5" style="font-family: 'Arial', sans-serif; font-weight: 300;">NUEVO SANTANDER</h3>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <p class="text-lg font-bold uppercase tracking-widest">SOLICITUD DE BECA</p>
+                    <p class="text-sm font-semibold text-slate-700">SCHOOL YEAR 2026-2027</p>
+                    <p id="pdfMetaSeccion" class="text-xl font-extrabold text-blue-900 tracking-wider mt-1">KINDERGARTEN</p>
                 </div>
             </div>
-            <div class="text-right">
-                <p class="text-lg font-bold uppercase tracking-widest">SOLICITUD DE BECA</p>
-                <p class="text-sm font-semibold text-slate-700">SCHOOL YEAR 2026-2027</p>
-                <p id="pdfMetaSeccion" class="text-xl font-extrabold text-blue-900 tracking-wider mt-1">KINDERGARTEN</p>
-            </div>
-        </div>
 
             <div class="grid grid-cols-3 gap-4 mb-6 text-sm">
                 <div class="border-b border-slate-400 pb-1">
@@ -621,7 +621,6 @@
         function guardarFolioManual(valor) {
             let cleanVal = valor.trim();
             if (cleanVal) {
-                // Si el usuario escribe un número simple (ej: 5), lo formateamos con ceros (005)
                 if (!isNaN(cleanVal) && cleanVal !== "") {
                     cleanVal = cleanVal.padStart(3, '0');
                 }
@@ -650,7 +649,7 @@
             // 1. Limpiar todos los campos de texto y número del formulario
             document.getElementById('scholarshipForm').reset();
             
-            // 2. Volver a colocar la fecha de hoy
+            // 2. Volver a colocar la fecha de hoy fixed
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('fechaSolicitud').value = today;
 
@@ -683,22 +682,18 @@
             });
         }
 
-// --- NUEVA LÓGICA PARA EVITAR QUE SE BORRE LA FIRMA AL HACER SCROLL ---
+        // --- NUEVA LÓGICA PARA EVITAR QUE SE BORRE LA FIRMA AL HACER SCROLL ---
         let lastCanvasWidth = 0;
         let lastCanvasHeight = 0;
 
         function resizeCanvas() {
             const rect = canvas.parentNode.getBoundingClientRect();
             
-            // Redondeamos para evitar variaciones por fracciones de píxel
             const newWidth = Math.round(rect.width);
             const newHeight = Math.round(rect.height);
 
-            // SOLO redimensionamos y limpiamos si las dimensiones físicas reales cambiaron
-            // (por ejemplo, si se rota el iPad de vertical a horizontal)
             if (newWidth !== lastCanvasWidth || newHeight !== lastCanvasHeight) {
                 
-                // Guardamos el contenido actual por si acaso hay un cambio real menor
                 let tempCanvas = null;
                 if (hasSigned) {
                     tempCanvas = document.createElement('canvas');
@@ -708,28 +703,22 @@
                     tempCtx.drawImage(canvas, 0, 0);
                 }
 
-                // Ajustamos el tamaño real del lienzo
                 canvas.width = newWidth;
                 canvas.height = newHeight;
                 
-                // Guardamos las nuevas dimensiones de control
                 lastCanvasWidth = newWidth;
                 lastCanvasHeight = newHeight;
 
-                // Volvemos a configurar el estilo del trazo (se pierde al cambiar de tamaño)
                 ctx.lineWidth = 2.5;
                 ctx.lineCap = 'round';
                 ctx.strokeStyle = '#1e3a8a';
 
-                // Si ya había una firma, la restauramos en la medida de lo posible en el nuevo espacio
                 if (hasSigned && tempCanvas) {
                     ctx.drawImage(tempCanvas, 0, 0, newWidth, newHeight);
                 }
             }
         }
 
-        // Modificamos la escucha del evento resize para darle un pequeño tiempo de espera (debounce)
-        // Esto evita que se dispare de manera descontrolada en móviles
         let resizeTimeout;
         window.addEventListener('resize', () => {
             clearTimeout(resizeTimeout);
@@ -853,7 +842,7 @@
             document.getElementById('activeEdadLabel').innerText = `${edad} Años`;
         }
 
-async function generatePDF() {
+        async function generatePDF() {
             const paterno = document.getElementById('alumnoPaterno').value.trim();
             const materno = document.getElementById('alumnoMaterno').value.trim();
             const nombres = document.getElementById('alumnoNombres').value.trim();
@@ -869,15 +858,12 @@ async function generatePDF() {
                 return;
             }
 
-            // 1. OBTENER LA ABREVIACIÓN DE LA SECCIÓN / GRADO
             let seccionAbreviada = "";
             const gradoSeleccionado = document.getElementById('alumnoGrado').value;
 
-            // Evaluamos primero si es Maternal (Pre-K)
             if (gradoSeleccionado.includes("Pre-K") || gradoSeleccionado.toLowerCase().includes("maternal")) {
                 seccionAbreviada = "PK";
             } else {
-                // Si no es maternal, abreviamos por sección principal
                 switch(currentSection) {
                     case 'KINDERGARTEN':
                         seccionAbreviada = "K";
@@ -896,11 +882,7 @@ async function generatePDF() {
                 }
             }
 
-            // 2. EXTRAER SOLO EL PRIMER NOMBRE
-            // Divide la cadena por espacios y toma el primer elemento
             const primerNombre = nombres.split(" ")[0];
-
-            // 3. OBTENER EL FOLIO ACTUAL
             const folioActual = document.getElementById('folioNo').value || '000';
 
             document.getElementById('pdfMetaSeccion').innerText = currentSection;
@@ -1001,12 +983,9 @@ async function generatePDF() {
 
                     pdf.addImage(imgData, 'JPEG', 0, 0, width, height);
                     
-                    // 4. CONSTRUCCIÓN DEL NOMBRE DEL ARCHIVO CON LA NUEVA ESTRUCTURA
-                    // Estructura: Grado_Folio_Apellido Paterno_Primer Nombre.pdf
                     const nombreArchivo = `${seccionAbreviada}_${folioActual}_${paterno}_${primerNombre}.pdf`;
                     pdf.save(nombreArchivo);
 
-                    // --- ENVIAR COMO FORM DATA (MÁS COMPATIBLE CON NO-CORS) ---
                     try {
                         const nombreCompleto = `${paterno} ${materno} ${nombres}`.trim();
                         const porcBecaAnterior = isRenovacion ? (document.getElementById('porcentajeAnterior').value || '0') + '%' : 'N/A';
@@ -1031,8 +1010,18 @@ async function generatePDF() {
                         .catch(err => console.error("Error al enviar:", err));
 
                     } catch (errorSheets) {
-                        console.error("Error:", errorSheets);
+                        console.error("Error al registrar en Google Sheets:", errorSheets);
                     }
+
+                    incrementarFolio();
+                    resetFormulario();
+
+                } catch (error) {
+                    console.error("Error al exportar el PDF:", error);
+                    alert("Ocurrió un error al generar tu PDF. Inténtalo de nuevo.");
+                } finally {
+                    processingModal.remove();
+                }
             }, 800);
         }
     </script>
