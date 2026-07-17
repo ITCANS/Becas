@@ -18,7 +18,6 @@
         .font-serif-title {
             font-family: 'Playfair Display', serif;
         }
-        /* Ajuste específico para pantallas táctiles de iPad */
         .signature-pad {
             touch-action: none;
         }
@@ -27,14 +26,10 @@
 <body class="text-slate-800 min-h-screen flex flex-col pb-12">
 
     <header class="bg-gradient-to-r from-blue-900 to-indigo-950 text-white shadow-xl py-6 px-4 md:px-8">
-        <!-- NOMBRE DEL COLEGIO OPTIMIZADO EN EL HEADER -->
         <div class="flex items-center gap-4">
-            <!-- El contenedor de tu logo (en caso de que solo uses el isotipo azul de la izquierda) -->
             <div class="bg-white p-1 rounded-full shadow-md w-16 h-16 flex items-center justify-center overflow-hidden">
                 <img src="logo.png" alt="Logo CANS" class="w-full h-full object-contain">
             </div>
-            
-            <!-- Texto replicando el diseño oficial -->
             <div class="flex flex-col justify-center select-none text-white leading-none">
                 <h2 class="text-2xl font-black tracking-normal uppercase" style="font-family: 'Montserrat', 'Arial Black', sans-serif;">COLEGIO</h2>
                 <h2 class="text-2xl font-black tracking-normal uppercase mt-0.5" style="font-family: 'Montserrat', 'Arial Black', sans-serif;">AMERICANO</h2>
@@ -44,9 +39,7 @@
     </header>
 
     <main class="flex-grow max-w-6xl w-full mx-auto px-4 md:px-8 mt-8">
-        
         <div class="space-y-8">
-            
             <div class="bg-white rounded-3xl shadow-lg border border-slate-100 overflow-hidden">
                 <div class="bg-slate-50 border-b border-slate-100 p-4 md:p-6">
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">
@@ -73,7 +66,6 @@
                 </div>
 
                 <form id="scholarshipForm" class="p-6 md:p-8 space-y-8" onsubmit="event.preventDefault();">
-                    
                     <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-xl">
                         <p class="text-xs text-amber-900 leading-relaxed">
                             <strong>Importante:</strong> El COLEGIO AMERICANO NUEVO SANTANDER se reserva el derecho de asignación, renovación, revisión, modificación o cancelación en caso de incumplimiento con los reglamentos institucionales vigentes. Para el trámite debe entregar toda la documentación enlistada en tiempo y forma.
@@ -298,16 +290,13 @@
                             </label>
                         </div>
                     </div>
-
                 </form>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                
                 <div class="bg-white rounded-3xl shadow-lg border border-slate-100 p-6 md:p-8 text-center space-y-6 flex flex-col justify-between">
                     <div>
                         <h3 class="text-xl font-bold font-serif-title text-blue-900 border-b border-slate-100 pb-4">Exportar Solicitud</h3>
-                        
                         <div class="bg-slate-50 p-4 rounded-2xl text-left space-y-3 border border-slate-100 mt-4">
                             <p class="text-xs text-slate-500 flex justify-between">
                                 <span>Sección activa:</span>
@@ -333,7 +322,6 @@
                             <i class="fa-solid fa-file-pdf text-2xl"></i>
                             <span>Generar PDF de Beca</span>
                         </button>
-                        
                         <p class="text-[11px] text-slate-400 leading-normal">
                             La solicitud se exportará utilizando los estándares de maquetación del Colegio CANS, adjuntando la firma digital capturada en la iPad.
                         </p>
@@ -367,21 +355,15 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
-
     </main>
 
     <div class="absolute -left-[9999px] top-0">
         <div id="pdfTemplate" class="w-[800px] bg-white p-10 text-slate-950 font-serif relative" style="font-family: 'Times New Roman', Times, serif;">
-            
             <div class="flex justify-between items-start border-b-2 border-slate-900 pb-5 mb-5">
                 <div class="flex items-center gap-5">
-                    <!-- Logo en el PDF -->
                     <img src="logo.png" alt="Logo CANS" class="w-20 h-20 object-contain">
-                    
-                    <!-- Texto imitando el logotipo oficial -->
                     <div class="flex flex-col justify-center leading-[0.95] text-slate-950">
                         <h2 class="text-3xl font-extrabold tracking-normal uppercase" style="font-family: 'Arial Black', sans-serif;">COLEGIO</h2>
                         <h2 class="text-3xl font-extrabold tracking-normal uppercase mt-1" style="font-family: 'Arial Black', sans-serif;">AMERICANO</h2>
@@ -523,7 +505,6 @@
             </div>
 
             <div class="grid grid-cols-2 gap-6 pt-6 border-t border-slate-400 mt-10">
-                
                 <div class="text-center flex flex-col justify-between items-center h-44 border-r border-slate-300 pr-4">
                     <span class="text-[10px] uppercase font-bold text-slate-500">Firma de conformidad del Padre/tutor del alumno</span>
                     <div class="w-48 h-24 border border-slate-200 flex items-center justify-center rounded">
@@ -550,14 +531,12 @@
                         <div>Autorizado Por: ________________</div>
                     </div>
                 </div>
-
             </div>
 
             <div class="mt-8 pt-4 border-t border-slate-300 text-center text-[10px] text-slate-500">
                 <p class="font-semibold">Lic. Brenda A. Pulido Galván — 868 819 2323 Ext. 150</p>
                 <p>Blvd. Manuel Cavazos Lerma S/N, La Encantada, 87389 Matamoros, Tamps.</p>
             </div>
-
         </div>
     </div>
 
@@ -576,7 +555,11 @@
         let drawing = false;
         let hasSigned = false;
 
+        let lastCanvasWidth = 0;
+        let lastCanvasHeight = 0;
+
         window.addEventListener('load', () => {
+            // Carga inicial correcta de la fecha sin retrasos
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('fechaSolicitud').value = today;
             
@@ -584,6 +567,7 @@
             updateGradoOptions();
             resizeCanvas();
             
+            // Re-vincular eventos de firma de forma nativa e ininterrumpida
             canvas.addEventListener('mousedown', startDrawing);
             canvas.addEventListener('mouseup', stopDrawing);
             canvas.addEventListener('mousemove', draw);
@@ -606,9 +590,6 @@
             }, { passive: false });
         });
 
-        window.addEventListener('resize', resizeCanvas);
-
-        // --- SISTEMA DE PERSISTENCIA DE FOLIO ---
         function inicializarFolio() {
             let savedFolio = localStorage.getItem('folioCANS');
             if (!savedFolio) {
@@ -632,10 +613,7 @@
         function incrementarFolio() {
             const currentFolioStr = document.getElementById('folioNo').value || "001";
             let currentFolioNum = parseInt(currentFolioStr, 10);
-            
-            if (isNaN(currentFolioNum)) {
-                currentFolioNum = 1;
-            }
+            if (isNaN(currentFolioNum)) currentFolioNum = 1;
             
             const nextFolioNum = currentFolioNum + 1;
             const nextFolioStr = nextFolioNum.toString().padStart(3, '0');
@@ -644,56 +622,35 @@
             document.getElementById('folioNo').value = nextFolioStr;
         }
 
-        // --- SISTEMA DE REINICIO DE FORMULARIO ---
         function resetFormulario() {
-            // 1. Limpiar todos los campos de texto y número del formulario
             document.getElementById('scholarshipForm').reset();
             
-            // 2. Volver a colocar la fecha de hoy fixed
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('fechaSolicitud').value = today;
 
-            // 3. Recuperar y colocar el folio incrementado
             let savedFolio = localStorage.getItem('folioCANS') || "001";
             document.getElementById('folioNo').value = savedFolio;
 
-            // 4. Forzar el ocultamiento de campos condicionales
             document.getElementById('sectionRenovacion').classList.add('hidden');
             document.getElementById('datosHermanos').classList.add('hidden');
             document.getElementById('escuelaProcedenciaEspecifica').classList.add('hidden');
 
-            // 5. Restablecer valores dinámicos
             document.getElementById('alumnoEdad').value = "0 años";
-            
-            // 6. Limpiar lienzo de firma
             clearSignature();
-
-            // 7. Volver a la sección por defecto (Kindergarten)
             changeSection('KINDERGARTEN');
 
-            // 8. Actualizar las etiquetas informativas de la tarjeta lateral
             document.getElementById('activeTramiteLabel').innerText = "Nuevo Solicitante";
             document.getElementById('activeEdadLabel').innerText = "--";
 
-            // 9. Desplazamiento suave hacia arriba
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-
-        // --- NUEVA LÓGICA PARA EVITAR QUE SE BORRE LA FIRMA AL HACER SCROLL ---
-        let lastCanvasWidth = 0;
-        let lastCanvasHeight = 0;
 
         function resizeCanvas() {
             const rect = canvas.parentNode.getBoundingClientRect();
-            
             const newWidth = Math.round(rect.width);
             const newHeight = Math.round(rect.height);
 
             if (newWidth !== lastCanvasWidth || newHeight !== lastCanvasHeight) {
-                
                 let tempCanvas = null;
                 if (hasSigned) {
                     tempCanvas = document.createElement('canvas');
@@ -705,7 +662,6 @@
 
                 canvas.width = newWidth;
                 canvas.height = newHeight;
-                
                 lastCanvasWidth = newWidth;
                 lastCanvasHeight = newHeight;
 
@@ -769,14 +725,14 @@
 
         function changeSection(sectionKey) {
             currentSection = sectionKey;
-            
             document.querySelectorAll('.sec-btn').forEach(btn => {
                 btn.className = "sec-btn px-3 py-3 rounded-xl border text-sm font-bold flex flex-col items-center justify-center gap-1.5 transition-all duration-200 shadow-sm bg-white text-slate-700 border-slate-200 hover:bg-slate-50";
             });
             
             const activeBtn = document.getElementById(`btn-${sectionKey}`);
-            activeBtn.className = "sec-btn px-3 py-3 rounded-xl border text-sm font-bold flex flex-col items-center justify-center gap-1.5 transition-all duration-200 shadow-sm bg-blue-600 text-white border-blue-600";
-            
+            if(activeBtn) {
+                activeBtn.className = "sec-btn px-3 py-3 rounded-xl border text-sm font-bold flex flex-col items-center justify-center gap-1.5 transition-all duration-200 shadow-sm bg-blue-600 text-white border-blue-600";
+            }
             document.getElementById('activeSecLabel').innerText = sectionKey;
             updateGradoOptions();
         }
@@ -784,7 +740,6 @@
         function updateGradoOptions() {
             const gradoSelect = document.getElementById('alumnoGrado');
             gradoSelect.innerHTML = '';
-            
             const opciones = GRADOS_SECCION[currentSection];
             opciones.forEach(op => {
                 const optEl = document.createElement('option');
@@ -830,14 +785,12 @@
             
             const nacimientoDate = new Date(nacimiento);
             const today = new Date();
-            
             let edad = today.getFullYear() - nacimientoDate.getFullYear();
             const m = today.getMonth() - nacimientoDate.getMonth();
             
             if (m < 0 || (m === 0 && today.getDate() < nacimientoDate.getDate())) {
                 edad--;
             }
-            
             document.getElementById('alumnoEdad').value = `${edad} Años`;
             document.getElementById('activeEdadLabel').innerText = `${edad} Años`;
         }
@@ -865,20 +818,11 @@
                 seccionAbreviada = "PK";
             } else {
                 switch(currentSection) {
-                    case 'KINDERGARTEN':
-                        seccionAbreviada = "K";
-                        break;
-                    case 'ELEMENTARY':
-                        seccionAbreviada = "E";
-                        break;
-                    case 'JR. HIGH SCHOOL':
-                        seccionAbreviada = "JR";
-                        break;
-                    case 'HIGH SCHOOL':
-                        seccionAbreviada = "HS";
-                        break;
-                    default:
-                        seccionAbreviada = "SEC";
+                    case 'KINDERGARTEN': seccionAbreviada = "K"; break;
+                    case 'ELEMENTARY': seccionAbreviada = "E"; break;
+                    case 'JR. HIGH SCHOOL': seccionAbreviada = "JR"; break;
+                    case 'HIGH SCHOOL': seccionAbreviada = "HS"; break;
+                    default: seccionAbreviada = "SEC";
                 }
             }
 
@@ -923,7 +867,6 @@
             }
 
             document.getElementById('pdfAluPromedio').innerText = document.getElementById('promedioEscolar').value || 'N/A';
-
             document.getElementById('pdfTutPaterno').innerText = tutorPaterno;
             document.getElementById('pdfTutMaterno').innerText = document.getElementById('tutorMaterno').value || '-';
             document.getElementById('pdfTutNombre').innerText = tutorNombres;
@@ -971,21 +914,15 @@
                     });
 
                     const imgData = canvasRender.toDataURL('image/jpeg', 0.95);
-                    
-                    const pdf = new jsPDF({
-                        orientation: 'portrait',
-                        unit: 'px',
-                        format: 'letter'
-                    });
-
+                    const pdf = new jsPDF({ orientation: 'portrait', unit: 'px', format: 'letter' });
                     const width = pdf.internal.pageSize.getWidth();
                     const height = pdf.internal.pageSize.getHeight();
 
                     pdf.addImage(imgData, 'JPEG', 0, 0, width, height);
-                    
                     const nombreArchivo = `${seccionAbreviada}_${folioActual}_${paterno}_${primerNombre}.pdf`;
                     pdf.save(nombreArchivo);
 
+                    // Petición fetch de Google Sheets aislada de forma segura para que no rompa la app
                     try {
                         const nombreCompleto = `${paterno} ${materno} ${nombres}`.trim();
                         const porcBecaAnterior = isRenovacion ? (document.getElementById('porcentajeAnterior').value || '0') + '%' : 'N/A';
@@ -1001,14 +938,9 @@
                         fetch(URL_GOOGLE_APP_SCRIPT, {
                             method: 'POST',
                             mode: 'no-cors', 
-                            headers: {
-                                'Content-Type': 'application/x-www-form-urlencoded'
-                            },
+                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                             body: formData.toString()
-                        })
-                        .then(() => console.log("Registro enviado correctamente."))
-                        .catch(err => console.error("Error al enviar:", err));
-
+                        });
                     } catch (errorSheets) {
                         console.error("Error al registrar en Google Sheets:", errorSheets);
                     }
