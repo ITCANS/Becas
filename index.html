@@ -1006,6 +1006,37 @@ async function generatePDF() {
                     const nombreArchivo = `${seccionAbreviada}_${folioActual}_${paterno}_${primerNombre}.pdf`;
                     pdf.save(nombreArchivo);
 
+                    // --- NUEVO: ENVÍO AUTOMÁTICO DE DATOS A GOOGLE SHEETS ---
+                    try {
+                        const nombreCompleto = `${paterno} ${materno} ${nombres}`.trim();
+                        const porcBecaAnterior = isRenovacion ? (document.getElementById('porcentajeAnterior').value || '0') + '%' : 'N/A';
+
+                        const datosParaSheets = {
+                            folio: folioActual,
+                            nombreCompleto: nombreCompleto,
+                            grado: gradoSeleccionado,
+                            becaAnterior: porcBecaAnterior
+                        };
+
+                        // URL DEL SCRIPT 
+                        const URL_GOOGLE_APP_SCRIPT = "https://script.google.com/macros/s/AKfycbyWoIXdTDrq9jUlqIn-gDK2HPWctuf4N6e2HpTZoiOAWAoxxIt5_oy-0coTKdfc9HBi/exec";
+
+                        fetch(URL_GOOGLE_APP_SCRIPT, {
+                            method: 'POST',
+                            mode: 'no-cors',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(datosParaSheets)
+                        })
+                        .then(() => console.log("Registro enviado correctamente a Google Sheets."))
+                        .catch(err => console.error("Error al enviar a Sheets:", err));
+
+                    } catch (errorSheets) {
+                        console.error("Error preparando los datos para Google Sheets:", errorSheets);
+                    }
+                    // --------------------------------------------------------
+
                     // ACCIONES POST-DESCARGA
                     incrementarFolio(); 
                     resetFormulario();  
