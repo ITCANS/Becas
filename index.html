@@ -1006,47 +1006,33 @@ async function generatePDF() {
                     const nombreArchivo = `${seccionAbreviada}_${folioActual}_${paterno}_${primerNombre}.pdf`;
                     pdf.save(nombreArchivo);
 
-                    // --- NUEVO: ENVÍO AUTOMÁTICO DE DATOS A GOOGLE SHEETS ---
+                    // --- ENVIAR COMO FORM DATA (MÁS COMPATIBLE CON NO-CORS) ---
                     try {
                         const nombreCompleto = `${paterno} ${materno} ${nombres}`.trim();
                         const porcBecaAnterior = isRenovacion ? (document.getElementById('porcentajeAnterior').value || '0') + '%' : 'N/A';
 
-                        const datosParaSheets = {
-                            folio: folioActual,
-                            nombreCompleto: nombreCompleto,
-                            grado: gradoSeleccionado,
-                            becaAnterior: porcBecaAnterior
-                        };
+                        const formData = new URLSearchParams();
+                        formData.append('folio', folioActual);
+                        formData.append('nombreCompleto', nombreCompleto);
+                        formData.append('grado', gradoSeleccionado);
+                        formData.append('becaAnterior', porcBecaAnterior);
 
-                        // URL DEL SCRIPT 
                         const URL_GOOGLE_APP_SCRIPT = "https://script.google.com/macros/s/AKfycbyWoIXdTDrq9jUlqIn-gDK2HPWctuf4N6e2HpTZoiOAWAoxxIt5_oy-0coTKdfc9HBi/exec";
 
                         fetch(URL_GOOGLE_APP_SCRIPT, {
                             method: 'POST',
-                            mode: 'no-cors',
+                            mode: 'no-cors', 
                             headers: {
-                                'Content-Type': 'application/json'
+                                'Content-Type': 'application/x-www-form-urlencoded'
                             },
-                            body: JSON.stringify(datosParaSheets)
+                            body: formData.toString()
                         })
-                        .then(() => console.log("Registro enviado correctamente a Google Sheets."))
-                        .catch(err => console.error("Error al enviar a Sheets:", err));
+                        .then(() => console.log("Registro enviado correctamente."))
+                        .catch(err => console.error("Error al enviar:", err));
 
                     } catch (errorSheets) {
-                        console.error("Error preparando los datos para Google Sheets:", errorSheets);
+                        console.error("Error:", errorSheets);
                     }
-                    // --------------------------------------------------------
-
-                    // ACCIONES POST-DESCARGA
-                    incrementarFolio(); 
-                    resetFormulario();  
-
-                } catch (error) {
-                    console.error("Error al exportar el PDF:", error);
-                    alert("Ocurrió un error al generar tu PDF. Inténtalo de nuevo.");
-                } finally {
-                    processingModal.remove();
-                }
             }, 800);
         }
     </script>
