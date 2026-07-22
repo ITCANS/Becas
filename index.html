@@ -940,15 +940,16 @@ async function generatePDF() {
 
                         // Construimos un objeto limpio de datos
                         // CÓDIGO ACTUALIZADO:
+                       // CÓDIGO ACTUALIZADO:
                         const datosEnvio = {
                             folio: folioActual,
                             nombreCompleto: nombreCompleto,
                             grado: gradoSeleccionado,
-                            becaAnterior: porcBecaAnterior,
-                            emailTutor: document.getElementById('tutorEmail').value.trim() // <-- Aquí agregas la nueva variable
+                            porcentajeAnterior: porcBecaAnterior,
+                            tutorEmail: document.getElementById('tutorEmail').value ? document.getElementById('tutorEmail').value.trim() : ''
                         };
 
-                        const URL_GOOGLE_APP_SCRIPT = "https://script.google.com/macros/s/AKfycbxh3KrAa63ZKiGrRjB8194YhwFJxuF0mkh8mIKgHy-KBSKSU53c0ja33ZS_mvs-WqFt/exec";
+                        const URL_GOOGLE_APP_SCRIPT = "https://script.google.com/macros/s/AKfycby_oH5ADWa72e8cvMzDUJZcld6LU5KAtIo8VveaYiv6m8AyLS-K5OArg59J2wuTdDJH/exec";
 
                         // Enviamos como texto plano para evitar bloqueos CORS y permitir que Apps Script procese el JSON de forma nativa
                         fetch(URL_GOOGLE_APP_SCRIPT, {
