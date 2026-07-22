@@ -479,6 +479,13 @@
                         <span class="text-[11px] text-slate-500 block">Celular de Contacto</span>
                         <span id="pdfTutCelular" class="font-bold">-</span>
                     </div>
+                    <div>
+                    <label class="block text-xs font-semibold text-slate-500 mb-1.5">Correo Electrónico del Tutor</label>
+                        <div class="relative">
+                                <span class="absolute left-3 top-2.5 text-slate-400"><i class="fa-solid fa-envelope"></i></span>
+                              <input type="email" id="tutorEmail" required class="w-full border border-slate-200 rounded-xl pl-9 pr-4 py-2.5 focus:ring-2 focus:ring-blue-500" placeholder="correo@ejemplo.com">
+                        </div>
+                    </div>
                     <div class="border-b border-slate-300 pb-1">
                         <span class="text-[11px] text-slate-500 block">Teléfono de Trabajo</span>
                         <span id="pdfTutTrabajo" class="font-bold">-</span>
@@ -930,14 +937,16 @@ async function generatePDF() {
                         const porcBecaAnterior = isRenovacion ? (document.getElementById('porcentajeAnterior').value || '0') + '%' : 'N/A';
 
                         // Construimos un objeto limpio de datos
+                        // CÓDIGO ACTUALIZADO:
                         const datosEnvio = {
                             folio: folioActual,
                             nombreCompleto: nombreCompleto,
                             grado: gradoSeleccionado,
-                            becaAnterior: porcBecaAnterior
+                            becaAnterior: porcBecaAnterior,
+                            emailTutor: document.getElementById('tutorEmail').value.trim() // <-- Aquí agregas la nueva variable
                         };
 
-                        const URL_GOOGLE_APP_SCRIPT = "https://script.google.com/macros/s/AKfycbyS0Bz9ovlmlIhyjXC42BQciXhfierSeB6fmTE4dq2b4WDvnt17f9sNi4j-LDmTJJYZ/exec";
+                        const URL_GOOGLE_APP_SCRIPT = "https://script.google.com/macros/s/AKfycbxh3KrAa63ZKiGrRjB8194YhwFJxuF0mkh8mIKgHy-KBSKSU53c0ja33ZS_mvs-WqFt/exec";
 
                         // Enviamos como texto plano para evitar bloqueos CORS y permitir que Apps Script procese el JSON de forma nativa
                         fetch(URL_GOOGLE_APP_SCRIPT, {
